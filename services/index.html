@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Services — Solomon Wood</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#0a0a0f;--surface:#111118;--card:#16161e;--border:rgba(255,255,255,0.07);--accent:#c8a96e;--accent2:#6e9ec8;--text:#e8e6e0;--muted:#7a7870;--white:#ffffff;--font-display:'Playfair Display',Georgia,serif;--font-body:'DM Sans',sans-serif;--r:12px;--r-lg:20px;--ease:cubic-bezier(0.22,1,0.36,1)}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px;line-height:1.7;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:.4}
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px}
+    h1,h2,h3,h4{font-family:var(--font-display);line-height:1.2}
+    a{color:var(--accent);text-decoration:none;transition:opacity .2s}a:hover{opacity:.75}
+    .label{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:inline-block;margin-bottom:14px}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 0}
+    .nav-inner{max-width:1180px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between}
+    .nav-logo{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--white);text-decoration:none}.nav-logo span{color:var(--accent)}
+    .nav-links{display:flex;gap:32px;list-style:none}.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s}.nav-links a:hover{color:var(--white)}
+    .btn{display:inline-flex;align-items:center;gap:9px;padding:11px 24px;border-radius:50px;font-family:var(--font-body);font-size:13px;font-weight:600;cursor:pointer;transition:all .3s var(--ease);border:none;text-decoration:none}
+    .btn-primary{background:var(--accent);color:#0a0a0f}.btn-primary:hover{background:#d9bc84;transform:translateY(-2px);box-shadow:0 12px 36px rgba(200,169,110,.3)}
+    .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}.btn-ghost:hover{border-color:rgba(200,169,110,.4);color:var(--accent);transform:translateY(-2px)}
+
+    .page-hero{padding:140px 0 90px;position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
+    .hero-blob{position:absolute;border-radius:50%;filter:blur(120px);opacity:.11;pointer-events:none}
+    .blob-1{width:500px;height:500px;background:var(--accent);top:-100px;right:-80px}
+    .blob-2{width:400px;height:400px;background:var(--accent2);bottom:-100px;left:-80px}
+    .page-hero-inner{max-width:1180px;margin:0 auto;padding:0 32px;position:relative;z-index:2;animation:fadeUp .7s var(--ease) both}
+    .page-hero h1{font-size:clamp(42px,5vw,66px);font-weight:900;color:var(--white);letter-spacing:-.03em;margin-bottom:20px}
+    .page-hero h1 em{font-style:normal;color:var(--accent)}
+    .page-hero p{font-size:17px;color:var(--muted);max-width:540px;line-height:1.8}
+
+    .container{max-width:1180px;margin:0 auto;padding:0 32px}
+    section{padding:90px 0}
+
+    /* SERVICE BLOCK — alternating layout */
+    .service-block{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;padding:72px 0;border-bottom:1px solid var(--border)}
+    .service-block:last-child{border-bottom:none}
+    .service-block.reverse .service-visual{order:-1}
+
+    .service-text h2{font-size:clamp(28px,3.5vw,40px);color:var(--white);letter-spacing:-.02em;margin-bottom:16px}
+    .service-text p{font-size:15px;color:var(--text);line-height:1.9;margin-bottom:16px}
+    .service-text p:last-of-type{margin-bottom:24px}
+
+    .includes-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+    .includes-list li{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text)}
+    .includes-list li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+
+    .price-note{display:inline-flex;align-items:center;gap:8px;background:rgba(200,169,110,.07);border:1px solid rgba(200,169,110,.18);border-radius:50px;padding:8px 18px;font-size:13px;color:var(--accent);font-weight:500}
+
+    .service-visual{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);height:320px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .service-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(200,169,110,.05) 0%,transparent 70%)}
+    .visual-icon{font-size:72px;position:relative;z-index:1}
+    .visual-tag{position:absolute;bottom:20px;left:20px;right:20px;background:rgba(10,10,15,.8);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;backdrop-filter:blur(12px)}
+    .visual-tag-title{font-size:13px;font-weight:600;color:var(--white);margin-bottom:3px}
+    .visual-tag-sub{font-size:11px;color:var(--muted)}
+
+    /* ADD-ONS */
+    .addons-section{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    .addons-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:56px}
+    .addon-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px 24px;transition:all .35s var(--ease)}
+    .addon-card:hover{border-color:rgba(200,169,110,.3);transform:translateY(-4px)}
+    .addon-icon{font-size:28px;margin-bottom:14px}
+    .addon-card h4{font-size:16px;color:var(--white);margin-bottom:8px}
+    .addon-card p{font-size:13px;color:var(--muted);line-height:1.7}
+
+    .section-header h2{font-size:clamp(30px,3.5vw,44px);color:var(--white);letter-spacing:-.02em;margin-bottom:14px}
+    .section-header p{font-size:16px;color:var(--muted);max-width:480px}
+
+    .cta-strip{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:48px 56px;display:flex;align-items:center;justify-content:space-between;gap:32px;position:relative;overflow:hidden}
+    .cta-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 0% 100%,rgba(200,169,110,.07) 0%,transparent 60%);pointer-events:none}
+    .cta-strip::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),transparent)}
+    .cta-strip h2{font-size:clamp(22px,3vw,32px);color:var(--white);letter-spacing:-.02em;margin-bottom:8px}
+    .cta-strip h2 em{font-style:normal;color:var(--accent)}
+    .cta-strip p{font-size:15px;color:var(--muted)}
+    .cta-actions{display:flex;gap:12px;flex-shrink:0}
+
+    .free-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(76,255,143,.08);border:1px solid rgba(76,255,143,.2);border-radius:50px;padding:8px 16px;font-size:12px;font-weight:600;color:#4cff8f;margin-bottom:20px}
+
+    .reveal{opacity:0;transform:translateY(28px);transition:all .7s var(--ease)}.reveal.visible{opacity:1;transform:translateY(0)}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    footer{border-top:1px solid var(--border);padding:36px 0}
+    .footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+    .footer-logo{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--white);text-decoration:none}.footer-logo span{color:var(--accent)}
+    .footer-copy{font-size:13px;color:var(--muted)}
+    .footer-links{display:flex;gap:24px}.footer-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color .2s}.footer-links a:hover{color:var(--accent)}
+
+    @media(max-width:900px){.service-block{grid-template-columns:1fr;gap:40px}.service-block.reverse .service-visual{order:0}.addons-grid{grid-template-columns:1fr 1fr}.cta-strip{flex-direction:column;align-items:flex-start;padding:36px 32px}.nav-links{display:none}}
+    @media(max-width:640px){.container{padding:0 20px}.addons-grid{grid-template-columns:1fr}.footer-inner{flex-direction:column;text-align:center}}
+       .site-footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+}
+
+.footer-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+/* Top */
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.footer-logo span {
+  color: var(--accent);
+}
+
+.footer-tagline {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 10px;
+  max-width: 260px;
+  line-height: 1.6;
+}
+
+/* Links */
+.footer-links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: var(--muted);
+  transition: 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+/* Bottom */
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.footer-bottom p {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.footer-legal {
+  display: flex;
+  gap: 18px;
+}
+
+.footer-legal a {
+  font-size: 12px;
+  color: var(--muted);
+  transition: 0.2s;
+}
+
+.footer-legal a:hover {
+  color: var(--accent);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .footer-top {
+    flex-direction: column;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Solomon<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="services.html" style="color:var(--accent)">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="how-i-work.html">How I Work</a></li>
+      <li><a href="index.html#portfolio">Portfolio</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <a href="index.html#contact" class="btn btn-primary">Start a Project</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-blob blob-1"></div>
+  <div class="hero-blob blob-2"></div>
+  <div class="page-hero-inner">
+    <span class="label">Services</span>
+    <h1>What I <em>can do</em> for you</h1>
+    <p>I work across three areas — web development, video editing, and design. Here's a plain breakdown of each, what's included, and who it's best for.</p>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+
+    <!-- Web Dev -->
+    <div class="service-block reveal" id="web">
+      <div class="service-text">
+        <span class="label">Service 01</span>
+        <h2>Website Development</h2>
+        <p>I build websites that are clean, fast, and mobile-ready. Whether you need a single landing page or a full multi-page site, I handle the design and the code — so you don't need to manage two different people.</p>
+        <p>I focus on sites that look professional and work well. Not over-engineered, not bloated with features nobody uses. Just something that represents your business well and gets out of the way.</p>
+        <ul class="includes-list">
+          <li>Landing pages and business websites</li>
+          <li>Portfolio and personal brand sites</li>
+          <li>E-commerce (Shopify / WooCommerce)</li>
+          <li>WordPress, Webflow, or custom HTML/CSS</li>
+          <li>Mobile responsive and fast-loading</li>
+          <li>Contact forms and basic SEO setup</li>
+        </ul>
+        <span class="price-note">⚡ Typical delivery: 3–14 days depending on scope</span>
+      </div>
+      <div class="service-visual reveal">
+        <div class="visual-icon">🌐</div>
+        <div class="visual-tag">
+          <div class="visual-tag-title">Website Development</div>
+          <div class="visual-tag-sub">Landing pages · Business sites · E-commerce</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video -->
+    <div class="service-block reverse reveal" id="video">
+      <div class="service-text">
+        <span class="label">Service 02</span>
+        <div class="free-badge">🎁 First video FREE for new clients</div>
+        <h2>Video Editing</h2>
+        <p>You shoot the footage, I turn it into something worth watching. I edit for social media — Reels, Shorts, TikToks — and longer content like event highlights or brand videos.</p>
+        <p>I keep edits tight, add subtitles where needed, pick music that fits, and make sure the pacing works for the platform. If you're posting regularly, I can also handle batches so you're never scrambling for content.</p>
+        <ul class="includes-list">
+          <li>Instagram Reels and YouTube Shorts</li>
+          <li>TikTok edits with trending formats</li>
+          <li>Captions and animated subtitles</li>
+          <li>Colour grading and basic effects</li>
+          <li>Event highlights and brand videos</li>
+          <li>Music selection and audio cleanup</li>
+        </ul>
+        <span class="price-note">⚡ Typical delivery: 2–5 days per video</span>
+      </div>
+      <div class="service-visual reveal">
+        <div class="visual-icon">🎬</div>
+        <div class="visual-tag">
+          <div class="visual-tag-title">Video Editing</div>
+          <div class="visual-tag-sub">Reels · Shorts · Highlights · Captions</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Design -->
+    <div class="service-block reveal" id="design">
+      <div class="service-text">
+        <span class="label">Service 03</span>
+        <h2>Graphic Design</h2>
+        <p>Need something designed? I handle the day-to-day design tasks that businesses actually need — flyers, menus, invoices, social graphics. Clean, on-brand, and ready to use.</p>
+        <p>I work fast on this type of project. Most straightforward design jobs are turned around within 24–48 hours. If you need something more involved or a batch of assets, I'll give you a clear timeline upfront.</p>
+        <ul class="includes-list">
+          <li>Promotional posters and flyers</li>
+          <li>Restaurant and service menus</li>
+          <li>Branded invoices and letterheads</li>
+          <li>Invitation and event cards</li>
+          <li>Social media graphics and templates</li>
+          <li>Print-ready and digital formats</li>
+        </ul>
+        <span class="price-note">⚡ Typical delivery: 24–48 hours for most designs</span>
+      </div>
+      <div class="service-visual reveal">
+        <div class="visual-icon">🎨</div>
+        <div class="visual-tag">
+          <div class="visual-tag-title">Graphic Design</div>
+          <div class="visual-tag-sub">Posters · Menus · Invoices · Invitations</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="addons-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="label">Also Available</span>
+      <h2>A few extras worth knowing about</h2>
+      <p>These come up often enough that they're worth mentioning separately.</p>
+    </div>
+    <div class="addons-grid">
+      <div class="addon-card reveal">
+        <div class="addon-icon">🔤</div>
+        <h4>Subtitle Packages</h4>
+        <p>Animated captions for your existing videos. Great for improving accessibility and engagement on muted feeds.</p>
+      </div>
+      <div class="addon-card reveal">
+        <div class="addon-icon">📦</div>
+        <h4>Content Batches</h4>
+        <p>Need 10–20 short videos edited per month? I offer ongoing content retainers for creators who post regularly.</p>
+      </div>
+      <div class="addon-card reveal">
+        <div class="addon-icon">🔧</div>
+        <h4>Website Updates</h4>
+        <p>Already have a website and just need a few things changed? I can help with one-off updates without a full rebuild.</p>
+      </div>
+      <div class="addon-card reveal">
+        <div class="addon-icon">📋</div>
+        <h4>Brand Starter Kit</h4>
+        <p>Logo, colour palette, and basic brand assets to give your business a consistent visual identity from day one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="cta-strip reveal">
+      <div>
+        <h2>Not sure what you <em>need?</em></h2>
+        <p>Just tell me about your situation and I'll suggest what makes sense. No obligation.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="index.html#contact" class="btn btn-primary">Get in Touch<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="how-i-work.html" class="btn btn-ghost">How I Work</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer class="site-footer">
+  <div class="footer-container">
+
+    <!-- Top Row -->
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">Solomon<span>.</span></a>
+        <p class="footer-tagline">
+          Freelance web developer & video editor crafting clean, high-performing digital experiences.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <a href="/about/">About</a>
+        <a href="/howiwork/">How I Work</a>
+        <a href="/services/">Services</a>
+        <a href="/contact/">Contact</a>
+      </div>
+    </div>
+
+    <!-- Bottom Row -->
+    <div class="footer-bottom">
+      <p>© 2026 Solomon Wood. All rights reserved.</p>
+
+      <div class="footer-legal">
+        <a href="/terms/">Terms</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/disclaimer/">Disclaimer</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script>
+  const reveals=document.querySelectorAll('.reveal');
+  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const s=[...e.target.parentElement.querySelectorAll('.reveal')];const i=s.indexOf(e.target);setTimeout(()=>e.target.classList.add('visible'),i*80);obs.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  reveals.forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
